@@ -32,7 +32,7 @@ cache = {
 CACHE_TTL = 60
 
 def fetch_leaderboard():
-    response = requests.get(LEADERBOARD_URL, headers=headers)
+    response = requests.post(LEADERBOARD_URL, headers=headers)
     response.raise_for_status()
     return response.json()
 
