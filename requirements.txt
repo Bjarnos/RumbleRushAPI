@@ -1,3 +1,5 @@
+uvicorn[standard]
+gunicorn
 fastapi
 requests
-dotenv
+python-dotenv
