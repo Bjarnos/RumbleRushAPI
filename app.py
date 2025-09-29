@@ -31,7 +31,7 @@ cache = {
 }
 CACHE_TTL = 60
 
-async def fetch_leaderboard():
+def fetch_leaderboard():
     response = requests.get(LEADERBOARD_URL, headers=headers)
     response.raise_for_status()
     return response.json()
