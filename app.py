@@ -50,4 +50,5 @@ async def get_leaderboards():
     except requests.RequestException as e:
         if cache["data"]:
             return JSONResponse(content=cache["data"], status_code=503)
+        print(f"Failed to fetch leaderboard: {e}", flush=True)
         return JSONResponse(content={"error": "Failed to fetch leaderboard"}, status_code=500)
