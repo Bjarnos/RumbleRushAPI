@@ -1,10 +1,9 @@
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
-import requests
-import asyncio
-import time
+import requests, asyncio, time, os, dotenv
+dotenv.load_dotenv()
 
-API_KEY = "your_api_key_here"
+API_KEY = os.environ.get('API_KEY')
 LEADERBOARD_URL = "https://us-central1-pocketrun-33bdc.cloudfunctions.net/v0270_maps/getTimeTrialLeaderboards"
 
 headers = {
