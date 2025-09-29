@@ -1,2 +1,4 @@
 gunicorn
 fastapi
+requests
+dotenv
