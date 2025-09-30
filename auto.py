@@ -57,7 +57,6 @@ watched = 0
 def watch_ad(data):
     global watched
     update_reltime()
-    print(timedheaders, flush=True)
     r = requests.post(purchase_url, headers=timedheaders, json=data, timeout=60)
     watched += 1
     if watched == 3:
