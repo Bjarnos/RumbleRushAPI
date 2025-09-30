@@ -42,10 +42,10 @@ async def root():
     return "Hi!"
 
 @app.get("/leaderboards")
-async def get_leaderboards(cache: str = Query(None, description="Use 'bypass' to ignore cache")):
+async def get_leaderboards(bypass: str = Query(None, description="Use 'bypass' to ignore cache")):
     now = time.time()
     
-    bypass_cache = cache == "bypass"
+    bypass_cache = bypass == "bypass"
     
     if cache["data"] and not bypass_cache and now - cache["timestamp"] < CACHE_TTL:
         return JSONResponse(content=cache["data"])
