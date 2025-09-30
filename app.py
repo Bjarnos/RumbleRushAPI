@@ -1,4 +1,5 @@
-from fastapi import FastAPI
+# test with uvicorn app:app --reload
+from fastapi import FastAPI, Query
 from fastapi.responses import JSONResponse
 import requests, asyncio, time, os, dotenv
 dotenv.load_dotenv()
@@ -36,10 +37,17 @@ def fetch_leaderboard():
     response.raise_for_status()
     return response.json()
 
+@app.get("/")
+async def root():
+    return "Hi!"
+
 @app.get("/leaderboards")
-async def get_leaderboards():
+async def get_leaderboards(cache: str = Query(None, description="Use 'bypass' to ignore cache")):
     now = time.time()
-    if cache["data"] and now - cache["timestamp"] < CACHE_TTL:
+    
+    bypass_cache = cache == "bypass"
+    
+    if cache["data"] and not bypass_cache and now - cache["timestamp"] < CACHE_TTL:
         return JSONResponse(content=cache["data"])
     
     try:

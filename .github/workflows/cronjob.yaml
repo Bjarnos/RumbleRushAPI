@@ -1,0 +1,17 @@
+name: Cronjob
+
+on:
+  schedule:
+    - cron: '*/9 * * * *'
+  workflow_dispatch:
+
+jobs:
+  curl-website:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: jitter
+        run: sleep $((RANDOM % 60))
+
+      - name: curl website
+        run: curl -s -o /dev/null -w "%{http_code}\n" https://rumbleapi.bjarnos.dev/ping
