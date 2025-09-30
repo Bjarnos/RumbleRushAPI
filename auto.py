@@ -57,6 +57,7 @@ watched = 0
 def watch_ad(data):
     global watched
     update_reltime()
+    print(timedheaders)
     r = requests.post(purchase_url, headers=timedheaders, json=data, timeout=60)
     watched += 1
     if watched == 3:
@@ -83,8 +84,8 @@ while True:
         print("Chunk 3", flush=True)
         watch_ad({"purchaseItemId":"items_upgrade_rv","purchaseSource":"RandomizedItemUpgrade"})
         r = watch_ad({"purchaseItemId":"items_upgrade_rv","purchaseSource":"RandomizedItemUpgrade"})
-        print(f"Done with status {r.status_code}", flush=True)
-
-        sleep(7200)
+        print(f"Done with status {r.status_code}: {r.json()}", flush=True)
     except Exception as e:
         print(f"Errored: {e}", flush=True)
+        
+    sleep(7200)
