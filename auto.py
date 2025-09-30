@@ -71,8 +71,6 @@ schunks = 0
 echunks = 0
 while True:
     try:
-        sleep(43200)
-        
         relnow = datetime.now().timestamp()
         AUTH = requests.post(
             f"https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDyBOKTSOCMvzJJsaf14eU9SezR0B12uPs",
@@ -105,3 +103,5 @@ while True:
         print(f"Total success: {schunks}, total error: {echunks}")
     except Exception as e:
         print(f"Errored: {e}", flush=True)
+
+    sleep(7200)
