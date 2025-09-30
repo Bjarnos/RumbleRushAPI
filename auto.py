@@ -1,9 +1,11 @@
 import requests, json, os, dotenv
 from datetime import datetime
 from time import sleep
-
 dotenv.load_dotenv()
-AUTH = os.environ.get('API_KEY')
+
+AUTH = None
+USERNAME = os.environ.get('USERNAME')
+PASSWORD = os.environ.get('PASSWORD')
 
 quest_url = "https://us-central1-pocketrun-33bdc.cloudfunctions.net/v0270_quests/progressQuests"
 purchase_url = "https://us-central1-pocketrun-33bdc.cloudfunctions.net/v0270_purchases/purchase"
@@ -13,7 +15,6 @@ headers = {
     "Accept": "*/*",
     "Accept-Encoding": "gzip, deflate, br, zstd",
     "Accept-Language": "en-US,en;q=0.5",
-    "Authorization": f"Bearer {AUTH}",
     "Connection": "keep-alive",
     "Content-Type": "application/json",
     "Host": "us-central1-pocketrun-33bdc.cloudfunctions.net",
@@ -66,9 +67,20 @@ def watch_ad(data):
 
 #requests.post(quest_url, headers=timedheaders, json={"questsToProgress":{"DailyQuests":{"quests.daily.tuesday.3":1.0}}}) # for real quests
 
+schunks = 0
+echunks = 0
 while True:
     try:
         relnow = datetime.now().timestamp()
+        AUTH = requests.post(
+            f"https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDyBOKTSOCMvzJJsaf14eU9SezR0B12uPs",
+            json={
+                "clientType": "CLIENT_TYPE_WEB",
+                "email": f"{USERNAME}@rumblerush.invalid",
+                "password": PASSWORD,
+                "returnSecureToken": True
+            }).json()["idToken"]
+        timedheaders["Authorization"] = f"Bearer {AUTH}"
 
         print("Chunk 1", flush=True)
         watch_ad({"purchaseItemId":"uncommon_lootbox.rv","purchaseSource":"Shop"})
@@ -84,6 +96,11 @@ while True:
         watch_ad({"purchaseItemId":"items_upgrade_rv","purchaseSource":"RandomizedItemUpgrade"})
         r = watch_ad({"purchaseItemId":"items_upgrade_rv","purchaseSource":"RandomizedItemUpgrade"})
         print(f"Done with status {r.status_code}: {r.json()}", flush=True)
+        if r.status_code == 200:
+            schunks += 1
+        else:
+            echunks += 1
+        print(f"Total success: {schunks}, total error: {echunks}")
     except Exception as e:
         print(f"Errored: {e}", flush=True)
 
