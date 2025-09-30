@@ -68,7 +68,6 @@ def watch_ad(data):
 
 while True:
     try:
-        sleep(7200)
         relnow = datetime.now().timestamp()
 
         print("Chunk 1", flush=True)
@@ -85,5 +84,7 @@ while True:
         watch_ad({"purchaseItemId":"items_upgrade_rv","purchaseSource":"RandomizedItemUpgrade"})
         r = watch_ad({"purchaseItemId":"items_upgrade_rv","purchaseSource":"RandomizedItemUpgrade"})
         print(f"Done with status {r.status_code}", flush=True)
+
+        sleep(7200)
     except Exception as e:
         print(f"Errored: {e}", flush=True)
