@@ -57,7 +57,7 @@ watched = 0
 def watch_ad(data):
     global watched
     update_reltime()
-    print(timedheaders)
+    print(timedheaders, flush=True)
     r = requests.post(purchase_url, headers=timedheaders, json=data, timeout=60)
     watched += 1
     if watched == 3:
@@ -87,5 +87,5 @@ while True:
         print(f"Done with status {r.status_code}: {r.json()}", flush=True)
     except Exception as e:
         print(f"Errored: {e}", flush=True)
-        
+
     sleep(7200)
