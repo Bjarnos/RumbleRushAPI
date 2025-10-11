@@ -37,12 +37,12 @@ while True:
     headers["Authorization"] = f"Bearer {AUTH}"
 
     r = requests.post(login_url, headers=headers, timeout=60)
-    if r.status_code != 200:
-        print(f"Failed to fetch trophies!\nStatus: {r.status_code}\nText: {r.text}", flush=True)
-    
-    trophies = r.json()["Rank"]["Xp"]
-    if trophies != savedtrophies:
-        print(f"Trophies is now: {trophies}! +{trophies-savedtrophies}", flush=True)
-        savedtrophies = trophies
+    if r.status_code == 200:
+        trophies = r.json()["Rank"]["Xp"]
+        if trophies != savedtrophies:
+            print(f"[1] Trophies is now: {trophies}! +{trophies-savedtrophies}", flush=True)
+            savedtrophies = trophies
+    else:
+        print(f"[1] Failed to fetch trophies!\nStatus: {r.status_code}\nText: {r.text}", flush=True)
         
     sleep(10)

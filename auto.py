@@ -82,26 +82,22 @@ while True:
             }).json()["idToken"]
         timedheaders["Authorization"] = f"Bearer {AUTH}"
 
-        print("Chunk 1", flush=True)
         watch_ad({"purchaseItemId":"uncommon_lootbox.rv","purchaseSource":"Shop"})
         watch_ad({"purchaseItemId":"pack.freegems.1","purchaseSource":"Shop"})
         watch_ad({"purchaseItemId":"pack.freecoins.1","purchaseSource":"Shop"})
 
-        print("Chunk 2", flush=True)
         watch_ad({"purchaseItemId":"uncommon_lootbox.rv","purchaseSource":"Shop"})
         watch_ad({"purchaseItemId":"pack.freegems.1","purchaseSource":"Shop"})
         watch_ad({"purchaseItemId":"pack.freecoins.1","purchaseSource":"Shop"})
 
-        print("Chunk 3", flush=True)
         watch_ad({"purchaseItemId":"items_upgrade_rv","purchaseSource":"RandomizedItemUpgrade"})
         r = watch_ad({"purchaseItemId":"items_upgrade_rv","purchaseSource":"RandomizedItemUpgrade"})
-        print(f"Done with status {r.status_code}: {r.json()}", flush=True)
+        print(f"[0] Done with status {r.status_code}: {r.text}", flush=True)
         if r.status_code == 200:
             schunks += 1
         else:
             echunks += 1
-        print(f"Total success: {schunks}, total error: {echunks}")
     except Exception as e:
-        print(f"Errored: {e}", flush=True)
+        print(f"[0] Errored: {e}", flush=True)
 
     sleep(7200)
