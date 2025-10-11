@@ -38,11 +38,11 @@ while True:
 
     r = requests.post(login_url, headers=headers, timeout=60)
     if r.status_code != 200:
-        print(f"Failed to fetch trophies!\nStatus: {r.status_code}\nText: {r.text}")
+        print(f"Failed to fetch trophies!\nStatus: {r.status_code}\nText: {r.text}", flush=True)
     
     trophies = r.json()["Rank"]["Xp"]
     if trophies != savedtrophies:
-        print(f"Trophies is now: {trophies}! +{trophies-savedtrophies}")
+        print(f"Trophies is now: {trophies}! +{trophies-savedtrophies}", flush=True)
         savedtrophies = trophies
         
     sleep(10)
