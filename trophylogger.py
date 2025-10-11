@@ -32,7 +32,7 @@ def send_discord_message(content: str):
     except Exception as e:
         print(f"[1] Error while sending Discord message: {e}")
 
-savedtrophies = -1
+saved_trophies = -1
 while True:
     AUTH = requests.post(
         f"https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDyBOKTSOCMvzJJsaf14eU9SezR0B12uPs",
@@ -49,7 +49,7 @@ while True:
         data = r.json()
         trophies = data["Rank"]["Xp"]
         user_id = data["User"]["Id"]
-        if trophies != savedtrophies:
+        if trophies != saved_trophies:
             diff = trophies - saved_trophies if saved_trophies != -1 else 0
 
             rank_text = "🏅 Rank: #"
