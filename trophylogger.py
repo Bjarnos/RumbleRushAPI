@@ -8,6 +8,7 @@ PASSWORD = os.environ.get('PASSWORD')
 WEBHOOK_URL = os.environ.get('WEBHOOK')
 
 login_url = "https://us-central1-pocketrun-33bdc.cloudfunctions.net/v0280_login/login"
+leaderboard_url = "https://us-central1-pocketrun-33bdc.cloudfunctions.net/v0280_ranks/getRanksLeaderboard"
 
 headers = {
     "Accept": "*/*",
@@ -45,13 +46,36 @@ while True:
 
     r = requests.post(login_url, headers=headers, timeout=60)
     if r.status_code == 200:
-        trophies = r.json()["Rank"]["Xp"]
+        data = r.json()
+        trophies = data["Rank"]["Xp"]
+        user_id = data["User"]["Id"]
         if trophies != savedtrophies:
-            diff = trophies - savedtrophies if savedtrophies != -1 else 0
-            msg = f"🏆 **Trophies updated!** Now at `{trophies}` (+{diff})."
+            diff = trophies - saved_trophies if saved_trophies != -1 else 0
+
+            rank_text = ""
+            try:
+                lb = requests.get(leaderboard_url, timeout=20)
+                if lb.status_code == 200:
+                    leaderboard = lb.json()
+                    rank = None
+                    for i, entry in enumerate(leaderboard):
+                        if entry["id"] == user_id:
+                            rank = i + 1
+                            break
+                    if rank:
+                        rank_text = f" 🏅 Rank: #{rank}"
+                    else:
+                        rank_text = " 🏅 Rank: #100+"
+                else:
+                    rank_text = " (Failed to fetch rank)"
+            except Exception as e:
+                rank_text = f" (Rank error: {e})"
+
+            msg = f"🏆 **Trophies updated!** Now at `{trophies}` (+{diff}).{rank_text}"
             print(msg, flush=True)
             send_discord_message(msg)
-            savedtrophies = trophies
+
+            saved_trophies = trophies
     else:
         print(f"[1] Failed to fetch trophies!\nStatus: {r.status_code}\nText: {r.text}", flush=True)
         
