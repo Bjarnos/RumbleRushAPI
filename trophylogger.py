@@ -5,6 +5,7 @@ dotenv.load_dotenv()
 AUTH = None
 USERNAME = os.environ.get('USERNAME')
 PASSWORD = os.environ.get('PASSWORD')
+WEBHOOK_URL = os.environ.get('WEBHOOK')
 
 login_url = "https://us-central1-pocketrun-33bdc.cloudfunctions.net/v0280_login/login"
 
@@ -24,6 +25,12 @@ headers = {
     "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:143.0) Gecko/20100101 Firefox/143.0",
 }
 
+def send_discord_message(content: str):
+    try:
+        requests.post(WEBHOOK_URL, json={"content": content}, timeout=10)
+    except Exception as e:
+        print(f"[1] Error while sending Discord message: {e}")
+
 savedtrophies = -1
 while True:
     AUTH = requests.post(
@@ -40,7 +47,10 @@ while True:
     if r.status_code == 200:
         trophies = r.json()["Rank"]["Xp"]
         if trophies != savedtrophies:
-            print(f"[1] Trophies is now: {trophies}! +{trophies-savedtrophies}", flush=True)
+            diff = trophies - savedtrophies if savedtrophies != -1 else 0
+            msg = f"🏆 **Trophies updated!** Now at `{trophies}` (+{diff})."
+            print(msg, flush=True)
+            send_discord_message(msg)
             savedtrophies = trophies
     else:
         print(f"[1] Failed to fetch trophies!\nStatus: {r.status_code}\nText: {r.text}", flush=True)
