@@ -67,7 +67,7 @@ while True:
                     else:
                         rank_text = "100+"
                 else:
-                    rank_text = f"(error code: {lb.status_code})"
+                    rank_text += f"(error code: {lb.status_code})"
             except Exception as e:
                 rank_text += f"(error: {e})"
 
