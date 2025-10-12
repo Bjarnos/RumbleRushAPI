@@ -63,7 +63,7 @@ while True:
                             rank = i + 1
                             break
                     if rank:
-                        rank_text += rank
+                        rank_text += str(rank)
                     else:
                         rank_text = "100+"
                 else:
