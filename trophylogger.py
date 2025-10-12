@@ -53,15 +53,19 @@ while True:
             diff = trophies - saved_trophies if saved_trophies != -1 else 0
 
             rank_text = ""
+            o_trophies = 0
             try:
                 lb = requests.post(leaderboard_url, headers=headers, timeout=20)
                 if lb.status_code == 200:
                     leaderboard = lb.json()
                     rank = None
+                    last_entry = None
                     for i, entry in enumerate(leaderboard):
                         if entry["id"] == user_id:
                             rank = i + 1
+                            o_trophies = last_entry and last_entry["xp"] or 0
                             break
+                        last_entry = entry
                     if rank:
                         rank_text = str(rank)
                     else:
@@ -72,6 +76,8 @@ while True:
                 rank_text = f"(error: {e})"
 
             msg = f"🏆 **Trophies updated!** Now at `{trophies}` (+{diff}). 🏅 Rank: `#{rank_text}`"
+            if o_trophies != 0:
+                msg += f" ({round(trophies/o_trophies*100, 1)}%)"
             print(msg, flush=True)
             send_discord_message(msg)
 
