@@ -54,7 +54,7 @@ while True:
 
             rank_text = "🏅 Rank: #"
             try:
-                lb = requests.get(leaderboard_url, headers=headers, timeout=20)
+                lb = requests.post(leaderboard_url, headers=headers, timeout=20)
                 if lb.status_code == 200:
                     leaderboard = lb.json()
                     rank = None
