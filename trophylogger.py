@@ -52,7 +52,7 @@ while True:
         if trophies != saved_trophies:
             diff = trophies - saved_trophies if saved_trophies != -1 else 0
 
-            rank_text = "🏅 Rank: #"
+            rank_text = ""
             try:
                 lb = requests.post(leaderboard_url, headers=headers, timeout=20)
                 if lb.status_code == 200:
@@ -63,15 +63,15 @@ while True:
                             rank = i + 1
                             break
                     if rank:
-                        rank_text += str(rank)
+                        rank_text = str(rank)
                     else:
                         rank_text = "100+"
                 else:
-                    rank_text += f"(error code: {lb.status_code})"
+                    rank_text = f"(error code: {lb.status_code})"
             except Exception as e:
-                rank_text += f"(error: {e})"
+                rank_text = f"(error: {e})"
 
-            msg = f"🏆 **Trophies updated!** Now at `{trophies}` (+{diff}). {rank_text}"
+            msg = f"🏆 **Trophies updated!** Now at `{trophies}` (+{diff}). 🏅 Rank: `#{rank_text}`"
             print(msg, flush=True)
             send_discord_message(msg)
 
