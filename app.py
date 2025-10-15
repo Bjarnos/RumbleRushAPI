@@ -105,6 +105,7 @@ async def fetch_account():
         "Name": json["User"]["Nickname"],
         "Age": json["User"]["CreationTime"]["_seconds"],
         "Played": json["User"]["MatchesPlayed"],
+        "Trophies": json["Rank"]["Xp"],
         "Rank": "#100+"
     }
 
