@@ -6,9 +6,10 @@ AUTH = None
 USERNAME = os.environ.get('USERNAME')
 PASSWORD = os.environ.get('PASSWORD')
 WEBHOOK_URL = os.environ.get('WEBHOOK')
+VERSION = os.environ.get('API_VERSION')
 
-login_url = "https://us-central1-pocketrun-33bdc.cloudfunctions.net/v0280_login/login"
-leaderboard_url = "https://us-central1-pocketrun-33bdc.cloudfunctions.net/v0280_ranks/getRanksLeaderboard"
+login_url = f"https://us-central1-pocketrun-33bdc.cloudfunctions.net/{VERSION}_login/login"
+leaderboard_url = f"https://us-central1-pocketrun-33bdc.cloudfunctions.net/{VERSION}_ranks/getRanksLeaderboard"
 
 headers = {
     "Accept": "*/*",
