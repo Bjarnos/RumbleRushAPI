@@ -103,7 +103,7 @@ async def fetch_account():
 
     data = {
         "Name": json["User"]["Nickname"],
-        "Age": json["User"]["CreationTime"]["Seconds"],
+        "Age": json["User"]["CreationTime"]["_seconds"],
         "Played": json["User"]["MatchesPlayed"],
         "Rank": "#100+"
     }
