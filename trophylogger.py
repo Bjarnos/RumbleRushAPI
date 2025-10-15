@@ -77,8 +77,8 @@ while True:
                 rank_text = f"(error: {e})"
 
             msg = f"🏆 **Trophies updated!** Now at `{trophies}` (+{diff}). 🏅 Rank: `#{rank_text}`"
-            # if o_trophies != 0:
-            #     msg += f" (`{round(trophies/o_trophies*100, 1)}%`)"
+            if o_trophies != 0:
+                msg += f" (`{round(trophies/o_trophies*100, 1)}%`)"
             print(msg, flush=True)
             send_discord_message(msg)
 
