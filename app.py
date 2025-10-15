@@ -47,7 +47,7 @@ app = FastAPI()
 cache = {}
 def cache_get(item, ttl):
     now = time.time()
-    if cache[item] and cache[item]["data"] and now - cache[item]["timestamp"] < ttl:
+    if cache.get(item) and cache[item]["data"] and now - cache[item]["timestamp"] < ttl:
         return cache[item]["data"]
     else:
         return False
