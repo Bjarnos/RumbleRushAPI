@@ -53,6 +53,7 @@ def cache_get(item, ttl):
         return False
     
 def cache_set(item, data):
+    cache[item] = {}
     cache[item]["data"] = data
     cache[item]["timestamp"] = time.time()
 
