@@ -1,3 +1,6 @@
+# Copyright (c) 2025 Bjarnos. All Rights Reserved.
+# Unauthorized use, reproduction, or derivation of this code is prohibited.
+
 # test with uvicorn app:app --reload
 from fastapi import FastAPI, Query
 from fastapi.responses import JSONResponse

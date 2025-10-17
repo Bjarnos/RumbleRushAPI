@@ -1,3 +1,6 @@
+# Copyright (c) 2025 Bjarnos. All Rights Reserved.
+# Unauthorized use, reproduction, or derivation of this code is prohibited.
+
 import requests, os, dotenv
 from time import sleep
 dotenv.load_dotenv()
